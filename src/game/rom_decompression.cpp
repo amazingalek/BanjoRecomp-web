@@ -31,7 +31,13 @@ size_t decompress_bkzip(mz_stream* stream, std::span<const uint8_t> compressed_r
         out.resize(decompressed_size + out_offset);
     }
 
-    stream->avail_in = end - compressed_data_start;
+    // The overlays aren't in ROM order (see the swap in decompress_bk), so for one of them `end`, the next one's start,
+    // comes before this one's. end - start then wraps to ~4 GiB, which a 64-bit build gets away with, as inflate stops
+    // at the end of the stream, but in a 32-bit address space (WebAssembly) next_in + avail_in wraps around too and
+    // inflate never finishes. So read up to the end of the ROM there.
+    uint32_t input_end = end > compressed_data_start ? end : uint32_t(compressed_rom.size());
+    stream->avail_in = input_end - compressed_data_start;
+
     stream->next_in = reinterpret_cast<const Bytef*>(compressed_rom.data() + compressed_data_start);
 
     stream->avail_out = decompressed_size;
