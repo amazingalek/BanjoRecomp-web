@@ -700,6 +700,14 @@ int main(int argc, char** argv) {
     NFD_Init();
 #endif
 
+#ifdef __EMSCRIPTEN__
+    // Render to RAM draws every frame a second time at the N64's resolution and copies it back into RDRAM, and in a
+    // browser that copy makes each display list wait 5-6 ms. The game's frame reads are patched to sample RT64's
+    // framebuffer on the GPU instead (transition_patches.c, picture_patches.c), and the jiggy transition draws the same
+    // without it. The Bottles bonus picture puzzle is patched the same way but hasn't been tried.
+    recompui::renderer::set_render_to_ram(false);
+#endif
+
     // Initialize program settings.
     recompui::programconfig::set_program_name(banjo::program_name);
     recompui::programconfig::set_program_id(banjo::program_id);
