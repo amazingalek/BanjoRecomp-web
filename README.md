@@ -1,4 +1,12 @@
 # Banjo: Recompiled
+
+> [!WARNING]
+> **This is amazingalek/BanjoRecomp-web, a fork, not Banjo: Recompiled.** Its `web` branch builds the game into a web
+> page (WebGPU, through [recomp-web](https://github.com/amazingalek/recomp-web)), and everything on that branch past
+> upstream's commits was written by AI (Claude). It is not made, endorsed or supported by the Banjo: Recompiled team,
+> whose no-AI stance below is about their project and still holds there: nothing here is offered upstream, and
+> please don't take issues with this fork to them. Building the page: [BUILDING.md](BUILDING.md#the-web-page).
+
 Banjo: Recompiled is a project that uses [N64: Recompiled](https://github.com/N64Recomp/N64Recomp) to **statically recompile** Banjo-Kazooie into a native port with many new features, enhancements, and extensive mod support. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide graphical enhancements.
 
 ### [Check out the latest release here](https://github.com/BanjoRecomp/BanjoRecomp/releases/latest).
