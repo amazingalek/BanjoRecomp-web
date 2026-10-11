@@ -8,7 +8,9 @@
 #include <stdexcept>
 #include <cinttypes>
 
-#include "nfd.h"
+#ifndef __EMSCRIPTEN__
+#include "nfd.h" // a browser has no native file dialogs; RecompFrontend asks the page instead
+#endif
 
 #include "ultramodern/ultra64.h"
 #include "ultramodern/ultramodern.hpp"
@@ -83,7 +85,14 @@ ultramodern::gfx_callbacks_t::gfx_data_t create_gfx() {
     SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC) > 0) {
+    // Emscripten's SDL2 is built without haptics, and asking for them there fails the whole call, gamepads with it.
+    // Nothing uses them: rumble goes through SDL_JoystickRumble.
+#ifdef __EMSCRIPTEN__
+    const Uint32 sdl_subsystems = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK;
+#else
+    const Uint32 sdl_subsystems = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC;
+#endif
+    if (SDL_Init(sdl_subsystems) > 0) {
         exit_error("Failed to initialize SDL2: %s\n", SDL_GetError());
     }
 
@@ -187,7 +196,8 @@ ultramodern::renderer::WindowHandle create_window(ultramodern::gfx_callbacks_t::
 
 #if defined(_WIN32)
     return ultramodern::renderer::WindowHandle{ wmInfo.info.win.window, GetCurrentThreadId() };
-#elif defined(__linux__) || defined(__ANDROID__)
+#elif defined(__linux__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+    // In a browser the window is the page's canvas, sized by the page (SDL follows its CSS size).
     return ultramodern::renderer::WindowHandle{ window };
 #elif defined(__APPLE__)
     SDL_MetalView view = SDL_Metal_CreateView(window);
@@ -533,7 +543,7 @@ void release_preload(PreloadContext& context) {
     context = {};
 }
 
-#elif defined(__linux__) || defined(APPLE)
+#elif defined(__linux__) || defined(APPLE) || defined(__EMSCRIPTEN__)
 
 struct PreloadContext {
 
@@ -685,8 +695,10 @@ int main(int argc, char** argv) {
     std::filesystem::current_path("/var/data", ec);
 #endif
 
+#ifndef __EMSCRIPTEN__
     // Initialize native file dialogs.
     NFD_Init();
+#endif
 
     // Initialize program settings.
     recompui::programconfig::set_program_name(banjo::program_name);
@@ -816,9 +828,12 @@ int main(int argc, char** argv) {
         threads_callbacks
     );
 
+#ifndef __EMSCRIPTEN__
     NFD_Quit();
+#endif
 
     if (preloaded) {
+
         release_preload(preload_context);
     }
 
