@@ -102,10 +102,9 @@ file(GLOB FUNC_CXX_SOURCES ${CMAKE_SOURCE_DIR}/RecompiledFuncs/*.cpp)
 target_sources(RecompiledFuncs PRIVATE ${FUNC_C_SOURCES} ${FUNC_CXX_SOURCES})
 
 # WebAssembly checks a call's signature when it links and turns a call to an undeclared function into a trap, so with
-# Emscripten that is an error in the recompiled code, and include/recompiled_externs.h declares what N64Recomp doesn't.
+# Emscripten that is an error in the recompiled code. N64Recomp's funcs.h declares everything its code calls.
 if (EMSCRIPTEN)
-    target_compile_options(RecompiledFuncs PRIVATE -Werror=implicit-function-declaration
-        "SHELL:-include ${CMAKE_SOURCE_DIR}/include/recompiled_externs.h")
+    target_compile_options(RecompiledFuncs PRIVATE -Werror=implicit-function-declaration)
 endif()
 
 # PatchesLib - Library containing the recompiled output for any custom function patches
@@ -133,12 +132,9 @@ target_sources(PatchesLib PRIVATE
 
 set_source_files_properties(${CMAKE_SOURCE_DIR}/RecompiledPatches/patches.c PROPERTIES COMPILE_FLAGS -fno-strict-aliasing)
 
-# The patches call the game's functions too, which only RecompiledFuncs/funcs.h declares.
+# The same for the patches, whose own funcs.h declares the game's functions they call.
 if (EMSCRIPTEN)
-    target_compile_options(PatchesLib PRIVATE -Werror=implicit-function-declaration
-        "SHELL:-include ${CMAKE_SOURCE_DIR}/include/recompiled_externs.h"
-        "SHELL:-include ${CMAKE_SOURCE_DIR}/RecompiledFuncs/funcs.h")
-
+    target_compile_options(PatchesLib PRIVATE -Werror=implicit-function-declaration)
 endif()
 
 
