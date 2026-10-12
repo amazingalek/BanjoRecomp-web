@@ -78,16 +78,31 @@ Voilà! You should now have a `BanjoRecompiled` executable in the build director
 This fork's `main` branch also builds with [Emscripten](https://emscripten.org) into a page, `BanjoRecompiled.html`,
 that draws through WebGPU. `lib/rt64`, `lib/N64ModernRuntime` and `lib/RecompFrontend` are the web forks at the
 commits [N64Recomp-browser](https://github.com/amazingalek/N64Recomp-browser)'s `forks.txt` names, and `lib/N64Recomp-browser` makes the
-game a page. Mods are off on the page, and so is RT64's render to RAM (`src/main/main.cpp` says why).
+game a page. Mods a player adds are off on the page (the live recompiler writes machine code, which a page can't
+load), and so is RT64's render to RAM (`src/main/main.cpp` says why).
 
-With steps 1 to 4 done (the generated code is the same), the Emscripten SDK installed and activated, and
+With steps 1 to 3 done, step 4 run with the `N64Recomp` and `RSPRecomp` built from `lib/N64ModernRuntime/N64Recomp`
+(N64Recomp-web: the page's build needs every function the generated code calls declared, and upstream's leaves some
+out), the Emscripten SDK installed and activated, and
 [naga](https://github.com/gfx-rs/wgpu/tree/trunk/naga) installed (`cargo install naga-cli`):
 
 ```bash
 embuilder build sdl2-mt freetype-legacysjlj      # once
-emcmake cmake -S . -B build-web -G Ninja -DCMAKE_BUILD_TYPE=Release -DRT64_NAGA_EXECUTABLE=<naga>     -DPATCHES_C_COMPILER=<clang with a MIPS target> -DPATCHES_LD=<ld.lld>
+emcmake cmake -S . -B build-web -G Ninja -DCMAKE_BUILD_TYPE=Release -DRT64_NAGA_EXECUTABLE=<naga> \
+    -DPATCHES_C_COMPILER=<clang with a MIPS target> -DPATCHES_LD=<ld.lld>
 cmake --build build-web --target BanjoRecompiled
 ```
+
+A first build compiles about 750 files, which took 34 minutes on a busy 12-core Windows PC. Two things make later
+builds shorter:
+
+- [ccache](https://ccache.dev) on `PATH` when you configure. Every compile then goes through it, so a new build dir,
+  or another checkout with its build dir in the same place, compiles nothing that was compiled before: a second
+  build dir took 8 minutes on the same PC, 4 of them the link. Keep the build dir inside the checkout, as
+  `build-web` is: from one outside it, about half the files miss. The cache is per user, so it also serves other
+  recomps built on the same forks.
+- `-DN64RECOMP_BROWSER_FAST_LINK=ON` when you only want to try something. The last step then takes seconds instead
+  of minutes, because it skips Binaryen's optimization of the whole program. Leave it off for a page that people play.
 
 `build-web` then holds `BanjoRecompiled.html`, `.js`, `.wasm`, `.data` and `coi_serviceworker.js`. The page needs a
 browser with WebGPU (Chrome or Edge 113 and up) and must be cross-origin isolated: serve the folder with
