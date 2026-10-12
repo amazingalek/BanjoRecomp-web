@@ -1,7 +1,7 @@
 # Banjo: Recompiled
 
 > [!WARNING]
-> **This is amazingalek/BanjoRecomp-web, a fork, not Banjo: Recompiled.** Its `web` branch builds the game into a web
+> **This is amazingalek/BanjoRecomp-web, a fork, not Banjo: Recompiled.** Its `main` branch builds the game into a web
 > page (WebGPU, through [N64Recomp-browser](https://github.com/amazingalek/N64Recomp-browser)), and everything on that branch past
 > upstream's commits was written by AI (Claude). It is not made, endorsed or supported by the Banjo: Recompiled team,
 > whose no-AI stance below is about their project and still holds there: nothing here is offered upstream, and
