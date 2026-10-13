@@ -8,7 +8,7 @@
 # minutes of them, until they brought no new ones), the file select screen, a new game's opening cutscene, Spiral
 # Mountain (Banjo's house inside and out, Bottles, the moat), the pause menu, the totals screen, Save and Quit with
 # its game over sequence. Not yet: Gruntilda's Lair, playing in a world, Mumbo's transformations, flying, bosses,
-# the quiz, the ending. A description missing here draws with the ubershader until its shader is built, as before.
+# the quiz, the ending. A description missing here draws with the ubershader until its shader is built.
 # Flags follow settings (filtering, HDR, MSAA, upscaling), so a change to one of those defaults means recording again.
 00504240 00080c3f fc119623 ff2fffff 0ccb540a
 00504240 00082c3f fc121824 ff33ffff 0ccb540a

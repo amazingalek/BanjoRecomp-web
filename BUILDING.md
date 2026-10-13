@@ -93,7 +93,7 @@ emcmake cmake -S . -B build-web -G Ninja -DCMAKE_BUILD_TYPE=Release -DRT64_NAGA_
 cmake --build build-web --target BanjoRecompiled
 ```
 
-A first build compiles about 750 files, which took 34 minutes on a busy 12-core Windows PC. Two things make later
+A first build compiles about 750 files, which took 34 minutes on a 12-core Windows PC. Two things make later
 builds shorter:
 
 - [ccache](https://ccache.dev) on `PATH` when you configure. Every compile then goes through it, so a new build dir,
