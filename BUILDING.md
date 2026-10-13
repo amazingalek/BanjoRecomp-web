@@ -111,8 +111,11 @@ set headers, as is, and `coi_serviceworker.js` sets them after one reload. The p
 it, the settings and the saves are kept in the browser's IndexedDB for that origin.
 
 When the game starts, the page shows "Preparing graphics" with a bar while it builds the game's shaders, and the game
-waits on its first frame until they are ready: 13 seconds for the 186 in `src/rt64_shaders.txt` in headless Chrome on
-an RTX 2070, on every visit, as Chrome keeps them for no later one. Without them RT64 would draw with its ubershader
+waits on its first frame until they are ready, in every browser: the 186 in `src/rt64_shaders.txt` are 111 pipelines,
+which took 3.3 seconds on a first visit in headless Chrome on an RTX 2070 and 0.2-0.3 seconds on the visits after, as
+Chrome keeps them (and the panel shows only after a second). Without them RT64 would draw with its ubershader
 meanwhile, which integrated graphics can't keep up with. The build specializes each one (`RT64_PREBUILT_SHADER_LIST`
-in `CMakeLists.txt`); the list's header says how it was recorded and what was played. Firefox builds none and draws
-with the ubershader alone.
+in `CMakeLists.txt`) and runs it through `spirv-opt` when that is on `PATH`; the list's header says how it was recorded
+and what was played. The list has no sections, so it is all built before the game starts. A shader it missed is built
+behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
+rest on the next visit.
