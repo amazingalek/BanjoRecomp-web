@@ -6,6 +6,9 @@
 > upstream's commits was written by AI (Claude). It is not made, endorsed or supported by the Banjo: Recompiled team,
 > whose no-AI stance below is about their project and still holds there: nothing here is offered upstream, and
 > please don't take issues with this fork to them. Building the page: [BUILDING.md](BUILDING.md#the-web-page).
+>
+> This port is here to build out and test N64Recomp-browser's web support on another game than the one it was written
+> for: what it turns up is fixed there where it can be, so every recomp's page gets the fix.
 
 **Play it in the browser: https://amazingalek.github.io/BanjoRecomp-web/**, with your own ROM, picked in the launcher
 and kept in the browser. It needs WebGPU (Chrome or Edge 113 and up). The page is built from this branch and published
