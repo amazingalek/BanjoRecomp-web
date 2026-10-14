@@ -76,14 +76,21 @@ Voilà! You should now have a `BanjoRecompiled` executable in the build director
 ## The web page
 
 This fork's `main` branch also builds with [Emscripten](https://emscripten.org) into a page, `BanjoRecompiled.html`,
-that draws through WebGPU. `lib/rt64`, `lib/N64ModernRuntime` and `lib/RecompFrontend` are the web forks at the
-commits [N64Recomp-browser](https://github.com/amazingalek/N64Recomp-browser)'s `forks.txt` names, and `lib/N64Recomp-browser` makes the
-game a page. Mods a player adds are off on the page (the live recompiler writes machine code, which a page can't
+that draws through WebGPU. `lib/rt64`, `lib/N64ModernRuntime` and `lib/RecompFrontend` are Banjo: Recompiled's own,
+at the same upstream commits, and [N64Recomp-browser](https://github.com/amazingalek/N64Recomp-browser) (`lib/N64Recomp-browser`)
+patches their checkouts with the web support and makes the game a page. The patches change nothing in the desktop
+build. Mods a player adds are off on the page (the live recompiler writes machine code, which a page can't
 load), and so is RT64's render to RAM (`src/main/main.cpp` says why).
 
-With steps 1 to 3 done, step 4 run with the `N64Recomp` and `RSPRecomp` built from `lib/N64ModernRuntime/N64Recomp`
-(N64Recomp-web: the page's build needs every function the generated code calls declared, and upstream's leaves some
-out), the Emscripten SDK installed and activated, and
+With steps 1 to 3 done, patch the submodules:
+
+```bash
+cmake -P lib/N64Recomp-browser/patches/apply.cmake lib
+```
+
+Then step 4, with the `N64Recomp` and `RSPRecomp` built from the patched `lib/N64ModernRuntime/N64Recomp` (the page's
+build needs every function the generated code calls declared, and upstream's leaves some out), the Emscripten SDK
+installed and activated, and
 [naga](https://github.com/gfx-rs/wgpu/tree/trunk/naga) installed (`cargo install naga-cli`):
 
 ```bash
