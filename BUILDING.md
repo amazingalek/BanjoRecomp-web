@@ -148,3 +148,8 @@ second for 10 s after the wait.
 Played again from the page built on N64Recomp-browser b1c35d1 (main 8e7ba0c) on 2026-10-14, on that canvas, an idle host,
 one page at a time: Firefox 158 waited 5.3 s for the 111 and then drew 58-60, after 10 s that rt64's pacing held at
 20-30, no sound short; Chrome 155 waited 1.4 s for 12 and drew 37-56.
+
+Played again from the page built on N64Recomp-browser ed8764a (v0.36.0, main e4cc529) on 2026-10-14, on that canvas,
+an idle host, one page at a time, 90 s: Firefox 158 waited 5.2 s for the 111 and then drew 59-60 throughout, rt64's
+pacing never on, 162 sound frames short in the wait; Chrome 155 waited 1.5 s for 12, then rt64's pacing held it at the
+game's 30 for 10 s (its first try of the display's rate held), then 55-56, 1,086 frames short around the wait.
