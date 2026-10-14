@@ -136,8 +136,11 @@ against Chrome's 40-61%. The game reads no frame back and draws nothing with the
 pass added to every present to make it fall behind, 4-25 game frames in every 5 s were never shown and the rest one
 to three times, in both browsers, until rt64-web e8e162e paced them evenly; then every frame was shown once.
 
-Played from the published page (main 92b8c8d, N64Recomp-browser v0.28.0) on 2026-10-14 (RTX 2070, a busy host): the
-launcher, Load ROM and the intro, with sound and no WebGPU errors. On a first visit headless Chrome 155 waited 1.8-2.6 s
-for 12 shaders at the start and had all 111 built 4-5 s later, the intro drawing 42-56 frames a second meanwhile and
-55-56 after (it waited 3.5 s for all of them on the patches before v0.27.0). Firefox 158 waited 8.4 s for all of them,
-the GPU busy with other work, and then drew 60.
+Played from the published page (main 8374e3c, N64Recomp-browser 7b80155) on 2026-10-14 (RTX 2070, an idle host), by
+`tools/play_plan.json` with N64Recomp-browser's `tools/play_page.mjs` (`node play_page.mjs chrome|firefox
+https://amazingalek.github.io/BanjoRecomp-web/index.html <rom> tools/play_plan.json`, its header says more): the
+launcher, Load ROM and the intro, with sound and no WebGPU errors. On a first visit a local build of the same commit
+in headless Chrome 155 waited 1.4 s for 12 shaders at the start and then drew 55-56 frames a second. Firefox 158 waited
+5.2 s for all 111 (8.4 s on v0.28.0) and then presented 31-136 a second, unevenly. On a 3840x2000 canvas, the stand-in
+for integrated graphics, Chrome drew 22-56 and Firefox 18-83, the GPU's memory in Firefox climbing from 1.9 to 6.5 GB
+in 25 s.
