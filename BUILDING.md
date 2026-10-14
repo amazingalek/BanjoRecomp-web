@@ -144,3 +144,7 @@ in headless Chrome 155 waited 1.4 s for 12 shaders at the start and then drew 55
 waited 5.4 s for all 111 (8.4 s on v0.28.0) and then drew 60-61. On a 3840x2000 canvas, the stand-in for integrated
 graphics, Chrome drew 22-56 and Firefox 14-61, unevenly, with rt64 pacing its presents to the game's 30 frames a
 second for 10 s after the wait.
+
+Played again from the page built on N64Recomp-browser b1c35d1 (main 8e7ba0c) on 2026-10-14, on that canvas, an idle host,
+one page at a time: Firefox 158 waited 5.3 s for the 111 and then drew 58-60, after 10 s that rt64's pacing held at
+20-30, no sound short; Chrome 155 waited 1.4 s for 12 and drew 37-56.
