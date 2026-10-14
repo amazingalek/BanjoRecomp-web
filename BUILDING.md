@@ -157,6 +157,11 @@ an idle host, one page at a time, 90 s: Firefox 158 waited 5.2 s for the 111 and
 pacing never on, 162 sound frames short in the wait; Chrome 155 waited 1.5 s for 12, then rt64's pacing held it at the
 game's 30 for 10 s (its first try of the display's rate held), then 55-56, 1,086 frames short around the wait.
 
+Played again from the page built on N64Recomp-browser 2efc795 (rt64-web 9ed449d, main 24b9a0d) on 2026-10-14, on that
+canvas, a quiet host, one page at a time, 25 s after the waits: Chrome 155 waited 1.4-1.7 s for the boot's 6 (two
+runs) and drew 59-60 straight after, rt64's pacing never on (it counts drops again only a second after a wait now);
+Firefox 158 waited 5.2 s for the boot's 39 and drew 59-60; no sound short after the waits, no WebGPU errors.
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
