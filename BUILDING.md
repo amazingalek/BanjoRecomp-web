@@ -134,3 +134,8 @@ against Chrome's 40-61%. The game reads no frame back and draws nothing with the
 ~600 draws a frame. It runs at 20-30 frames a second, interpolated to the display's rate. On an RTX 2070 with a heavy
 pass added to every present to make it fall behind, 4-25 game frames in every 5 s were never shown and the rest one
 to three times, in both browsers, until rt64-web e8e162e paced them evenly; then every frame was shown once.
+
+Played from the published page (main df2dd8d) on 2026-10-14 (RTX 2070, a busy host), built from Banjo: Recompiled's own
+submodules with N64Recomp-browser's `patches/`: the launcher, Load ROM, the intro and Banjo walking in Spiral
+Mountain, with no WebGPU errors. The shaders took 3.5 s in headless Chrome 155 and 6.0 s in Firefox 158. Chrome drew
+56 frames a second; Firefox stalled once for 215 ms early on, where its sound came up short, and then drew 60.
