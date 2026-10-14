@@ -140,7 +140,7 @@ Played from the published page (main 8374e3c, N64Recomp-browser 7b80155) on 2026
 `tools/play_plan.json` with N64Recomp-browser's `tools/play_page.mjs` (`node play_page.mjs chrome|firefox
 https://amazingalek.github.io/BanjoRecomp-web/index.html <rom> tools/play_plan.json`, its header says more): the
 launcher, Load ROM and the intro, with sound and no WebGPU errors. On a first visit a local build of the same commit
-in headless Chrome 155 waited 1.4 s for 12 shaders at the start and then drew 55-56 frames a second. Firefox 158 waited
-5.2 s for all 111 (8.4 s on v0.28.0) and then presented 31-136 a second, unevenly. On a 3840x2000 canvas, the stand-in
-for integrated graphics, Chrome drew 22-56 and Firefox 18-83, the GPU's memory in Firefox climbing from 1.9 to 6.5 GB
-in 25 s.
+in headless Chrome 155 waited 1.4 s for 12 shaders at the start and then drew 55-56 frames a second. Firefox 158
+waited 5.4 s for all 111 (8.4 s on v0.28.0) and then drew 60-61. On a 3840x2000 canvas, the stand-in for integrated
+graphics, Chrome drew 22-56 and Firefox 14-61, unevenly, with rt64 pacing its presents to the game's 30 frames a
+second for 10 s after the wait.
