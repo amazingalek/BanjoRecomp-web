@@ -117,13 +117,14 @@ browser with WebGPU (Chrome or Edge 113 and up) and must be cross-origin isolate
 set headers, as is, and `coi_serviceworker.js` sets them after one reload. The player picks their ROM in the launcher;
 it, the settings and the saves are kept in the browser's IndexedDB for that origin.
 
-When the game starts, the page shows "Preparing graphics" with a bar while it builds the game's shaders, and the game
-waits on its first frame until they are ready, in every browser: the 186 in `src/rt64_shaders.txt` are 111 pipelines,
-which took 3.3 seconds on a first visit in headless Chrome on an RTX 2070 and 0.2-0.3 seconds on the visits after, as
-Chrome keeps them (and the panel shows only after a second). Without them RT64 would draw with its ubershader
+The page builds the game's shaders from `src/rt64_shaders.txt`, whose 186 are 111 pipelines. In Chrome they are
+built behind the game from its first frame, and the game waits only when a frame wants 4 or more that aren't built yet,
+under a small "Preparing graphics" indicator in a corner (shown only after a second); Chrome keeps them for the visits
+after. Firefox builds a pipeline in line with the rest of its GPU work, so there the game waits on its first frame until
+all of them are built. Without them RT64 would draw with its ubershader
 meanwhile, which integrated graphics can't keep up with. The build specializes each one (`RT64_PREBUILT_SHADER_LIST`
 in `CMakeLists.txt`) and runs it through `spirv-opt` when that is on `PATH`; the list's header says how it was recorded
-and what was played. The list has no sections, so it is all built before the game starts. A shader it missed is built
+and what was played. The list has no sections. A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
 
@@ -135,7 +136,8 @@ against Chrome's 40-61%. The game reads no frame back and draws nothing with the
 pass added to every present to make it fall behind, 4-25 game frames in every 5 s were never shown and the rest one
 to three times, in both browsers, until rt64-web e8e162e paced them evenly; then every frame was shown once.
 
-Played from the published page (main df2dd8d) on 2026-10-14 (RTX 2070, a busy host), built from Banjo: Recompiled's own
-submodules with N64Recomp-browser's `patches/`: the launcher, Load ROM, the intro and Banjo walking in Spiral
-Mountain, with no WebGPU errors. The shaders took 3.5 s in headless Chrome 155 and 6.0 s in Firefox 158. Chrome drew
-56 frames a second; Firefox stalled once for 215 ms early on, where its sound came up short, and then drew 60.
+Played from the published page (main 92b8c8d, N64Recomp-browser v0.28.0) on 2026-10-14 (RTX 2070, a busy host): the
+launcher, Load ROM and the intro, with sound and no WebGPU errors. On a first visit headless Chrome 155 waited 1.8-2.6 s
+for 12 shaders at the start and had all 111 built 4-5 s later, the intro drawing 42-56 frames a second meanwhile and
+55-56 after (it waited 3.5 s for all of them on the patches before v0.27.0). Firefox 158 waited 8.4 s for all of them,
+the GPU busy with other work, and then drew 60.
