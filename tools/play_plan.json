@@ -1,0 +1,9 @@
+{
+  "header": ["The page's plan for N64Recomp-browser's tools/play_page.mjs: the launcher, Load ROM on a new profile,",
+             "Start Game, then 25 s of the intro, which plays by itself."],
+  "page": "BanjoRecompiled.html",
+  "load": [["until", "Device Name", 30000], ["wait", 9000]],
+  "setup": [["rom", 885, 323], ["wait", 4000]],
+  "start": [["click", 885, 323], ["until", "Initializing recomp heap", 30000], ["wait", 4000]],
+  "play": [["wait", 25000]]
+}
