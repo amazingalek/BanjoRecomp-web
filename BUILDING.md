@@ -126,3 +126,11 @@ in `CMakeLists.txt`) and runs it through `spirv-opt` when that is on `PATH`; the
 and what was played. The list has no sections, so it is all built before the game starts. A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
+
+On a laptop's Intel UHD (Tiger Lake, 2026-10-13, built from the web forks before the page moved to Banjo's own
+submodules) the page played smoothly in Chrome and almost so in Firefox: Firefox's frames came every 31 ms at the
+median, but 92 in two minutes took over 50 ms (Chrome's 3), its p99 62 ms against 32, with the Intel chip 79-89% busy
+against Chrome's 40-61%. The game reads no frame back and draws nothing with the ubershader there; it issues up to
+~600 draws a frame. It runs at 20-30 frames a second, interpolated to the display's rate. On an RTX 2070 with a heavy
+pass added to every present to make it fall behind, 4-25 game frames in every 5 s were never shown and the rest one
+to three times, in both browsers, until rt64-web e8e162e paced them evenly; then every frame was shown once.
