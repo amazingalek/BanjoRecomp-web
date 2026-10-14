@@ -120,11 +120,14 @@ it, the settings and the saves are kept in the browser's IndexedDB for that orig
 The page builds the game's shaders from `src/rt64_shaders.txt`, whose 186 are 111 pipelines. In Chrome they are
 built behind the game from its first frame, and the game waits only when a frame wants 4 or more that aren't built yet,
 under a small "Preparing graphics" indicator in a corner (shown only after a second); Chrome keeps them for the visits
-after. Firefox builds a pipeline in line with the rest of its GPU work, so there the game waits on its first frame until
-all of them are built. Without them RT64 would draw with its ubershader
+after. Firefox builds a pipeline in line with the rest of its GPU work, so there the game waits instead: on its first
+frame for the list's boot, and for a section when a frame first wants 4 of its shaders. Without them RT64 would draw with its ubershader
 meanwhile, which integrated graphics can't keep up with. The build specializes each one (`RT64_PREBUILT_SHADER_LIST`
 in `CMakeLists.txt`) and runs it through `spirv-opt` when that is on `PATH`; the list's header says how it was recorded
-and what was played. The list has no sections. A shader it missed is built
+and what was played. The list is in four sections, recorded by `tools/shader_plan.json` with N64Recomp-browser's
+`tools/record_shaders.mjs`: the boot (the Rareware logo and the band's intro, 39 pipelines), title (the title, its
+flyovers and the file select), game (a new game's opening and Spiral Mountain) and rest (what an earlier recording by
+hand met beyond those). A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
 
@@ -153,3 +156,9 @@ Played again from the page built on N64Recomp-browser ed8764a (v0.36.0, main e4c
 an idle host, one page at a time, 90 s: Firefox 158 waited 5.2 s for the 111 and then drew 59-60 throughout, rt64's
 pacing never on, 162 sound frames short in the wait; Chrome 155 waited 1.5 s for 12, then rt64's pacing held it at the
 game's 30 for 10 s (its first try of the display's rate held), then 55-56, 1,086 frames short around the wait.
+
+With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
+each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
+for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
+up; Chrome 155 headless waited 1.4-1.6 s for 6 at the start where it had waited 1.4-1.5 s for 12, and built the rest
+by ~6 s after Start Game against ~3 s; 59-60 presents a second (median) and no WebGPU errors in either browser.

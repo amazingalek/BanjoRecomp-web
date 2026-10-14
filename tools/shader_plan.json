@@ -1,0 +1,27 @@
+{
+  "header": ["Banjo-Kazooie's shader plan for N64Recomp-browser's tools/record_shaders.mjs (src/rt64_shaders.txt's header says",
+             "how its sections were put together): Start Game, then the band's intro, the title and its flyovers, the file select",
+             "and a new game (keys held 300 ms; Start is Enter, A Space; Start pressed five times reaches the file select whenever",
+             "the intro is skipped)."],
+  "page": "BanjoRecompiled.html",
+  "load": [["until", "Device Name", 30000], ["wait", 9000]],
+  "setup": [["rom", 885, 323], ["wait", 4000]],
+  "start": [["click", 885, 323], ["until", "Initializing recomp heap", 30000]],
+  "sections": [
+    { "name": "intro", "boot": true, "steps": [
+      ["wait", 80000] ] },
+    { "name": "title", "steps": [
+      ["wait", 12000], ["hold", "Enter", "Enter", 13, 300], ["wait", 5000], ["wait", 150000] ] },
+    { "name": "files", "steps": [
+      ["wait", 10000], ["hold", "Enter", "Enter", 13, 300], ["wait", 4000],
+      ["hold", "Enter", "Enter", 13, 300], ["wait", 4000], ["hold", "Enter", "Enter", 13, 300],
+      ["wait", 4000], ["hold", "Enter", "Enter", 13, 300], ["wait", 4000],
+      ["hold", "Enter", "Enter", 13, 300], ["wait", 4000], ["wait", 4000] ] },
+    { "name": "game", "steps": [
+      ["wait", 10000], ["hold", "Enter", "Enter", 13, 300], ["wait", 4000],
+      ["hold", "Enter", "Enter", 13, 300], ["wait", 4000], ["hold", "Enter", "Enter", 13, 300],
+      ["wait", 4000], ["hold", "Enter", "Enter", 13, 300], ["wait", 4000],
+      ["hold", "Enter", "Enter", 13, 300], ["wait", 4000], ["hold", "Space", " ", 32, 300],
+      ["wait", 60000], ["wait", 60000], ["wait", 60000], ["wait", 60000] ] }
+  ]
+}
