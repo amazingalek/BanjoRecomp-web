@@ -173,6 +173,14 @@ waited 3.9 s for the boot's 39 and then drew 20 a second (19.6-30.3), rt64's pac
 frames short three times mid-play. No WebGPU errors. Not smooth in either browser, and Firefox at about half Chrome's
 rate with its GPU mostly idle.
 
+Played again from the page built on N64Recomp-browser d3b9031 (N64ModernRuntime-web f0e0884, RecompFrontend-web 75fe596,
+rt64-web f34b19c; main b5dd1dc, gh-pages 91df497) on 2026-10-15, its files served locally with the cross-origin headers,
+RTX 2070, 1256x645, a fresh profile each, the host's every core busy with other work, by `tools/play_plan.json` (the
+intro, 25 s) with `play_page.mjs`: headless Chrome 155 waited 1.6 s for 6 and then drew 59.6 presents a second (median),
+Firefox 158 waited 3.2 s for 39 and then drew 59.4, with no WebGPU errors or exceptions in either. With
+`?present-stats&presents-in-flight=3` (rt64-web f34b19c) Firefox printed `plume: at most 3 presents in flight` and a
+line every 5 s: 59.5 presents a second, each done on the GPU 1-16 ms after it was presented (the median of each line).
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
