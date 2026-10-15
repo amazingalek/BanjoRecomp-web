@@ -181,6 +181,13 @@ Firefox 158 waited 3.2 s for 39 and then drew 59.4, with no WebGPU errors or exc
 `?present-stats&presents-in-flight=3` (rt64-web f34b19c) Firefox printed `plume: at most 3 presents in flight` and a
 line every 5 s: 59.5 presents a second, each done on the GPU 1-16 ms after it was presented (the median of each line).
 
+Played again from Pages, built on N64Recomp-browser 7277a2e (rt64-web 8bea892, tile copies reused from one display list
+to the next; main 086919d, gh-pages ffa73a0) on 2026-10-15, RTX 2070, 1256x645, a fresh profile each, the host's every
+core busy with other work, by `tools/play_plan.json` (the intro, 25 s) with `play_page.mjs`: headless Chrome 155 waited
+3.2 s for 6 and then drew 59.0 presents a second (median), Firefox 158 waited 5.4 s for 39 and then drew 59.1. Sound
+short only just after Chrome's wait, no WebGPU errors in either. Firefox's one exception is the first load's wasm fetch,
+cut off by `coi_serviceworker.js`'s reload.
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
