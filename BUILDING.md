@@ -188,6 +188,13 @@ core busy with other work, by `tools/play_plan.json` (the intro, 25 s) with `pla
 short only just after Chrome's wait, no WebGPU errors in either. Firefox's one exception is the first load's wasm fetch,
 cut off by `coi_serviceworker.js`'s reload.
 
+Played again from Pages on N64Recomp-browser v0.42.0 and v0.43.0 (mains 3d676e2 and 69d2981, the same code; Pages moved
+from one to the other while these ran) on 2026-10-15, RTX 2070, a fresh profile each, one page at a time, by
+`tools/play_plan.json` with `play_page.mjs`: at 1256x645 headless Chrome 155 waited 1.4 s for 6 and drew 59.6 presents
+a second (median), Firefox 158 waited 2.8 s for the boot's 39 and drew 59.6; at 3840x2000 (`--play 25`) Chrome waited
+1.5 s and drew 59.6, Firefox 2.9 s and 59.5. A few hundred frames of sound short around Chrome's wait, none in Firefox,
+no WebGPU errors.
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
