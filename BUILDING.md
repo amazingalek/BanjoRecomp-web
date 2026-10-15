@@ -162,6 +162,17 @@ canvas, a quiet host, one page at a time, 25 s after the waits: Chrome 155 waite
 runs) and drew 59-60 straight after, rt64's pacing never on (it counts drops again only a second after a wait now);
 Firefox 158 waited 5.2 s for the boot's 39 and drew 59-60; no sound short after the waits, no WebGPU errors.
 
+On a laptop's Intel UHD (Tiger Lake, Windows 11 in its best power efficiency mode) on 2026-10-14, from the published
+page (main 24b9a0d, N64Recomp-browser 2efc795), by `tools/play_plan.json` (`--play 90`) and `tools/shader_plan.json`
+(`--section game`) with `play_page.mjs` at 1256x645, Firefox 158 and headless Chrome 155, a fresh profile each, one
+page at a time; presents a second are medians after the waits, and the RTX beside the Intel chip drew nothing. Firefox
+waited 3.9 s for the boot's 39 and then drew 20 a second (19.6-30.3), rt64's pacing holding it at the game's 20 from
+63 s on, with the Intel chip 80% idle and Firefox's GPU process at 0.11 cores; in the game section it waited 3.6 s for
+39 and 1.4 s for 43 and drew 29.6 (19.4-35.5), Spiral Mountain drawn right. Chrome waited 2.0-2.5 s for 4 and drew
+48.5 and 40.9, the pacing switching 5 and 13 times, the Intel chip 40% busy, and in the game section 51-111 sound
+frames short three times mid-play. No WebGPU errors. Not smooth in either browser, and Firefox at about half Chrome's
+rate with its GPU mostly idle.
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
