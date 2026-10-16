@@ -131,6 +131,11 @@ hand met beyond those). A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
 
+`tools/play_plan.json` plays the page as a player would, for N64Recomp-browser's `tools/play_page.mjs`: the intro, a
+new game from the file select, then Spiral Mountain and Mumbo's Mountain, with Banjo on foot in each (its header says
+more). A new game's opening can be skipped with Start only once a save file exists, so `tools/warp.js` takes the game
+to a map by the same request its own code leaves for a map change.
+
 On a laptop's Intel UHD (Tiger Lake, 2026-10-13, built from the web forks before the page moved to Banjo's own
 submodules) the page played smoothly in Chrome and almost so in Firefox: Firefox's frames came every 31 ms at the
 median, but 92 in two minutes took over 50 ms (Chrome's 3), its p99 62 ms against 32, with the Intel chip 79-89% busy
