@@ -201,6 +201,14 @@ Played on N64Recomp-browser v0.46.0 (main 44e87c9 built with its pin moved there
 the boot's 39 and drew 59.6; at 3840x2000 (`--play 25`) Chrome waited 1.4 s and drew 59.6, Firefox 2.7 s and 59.6. No
 sound short in Chrome, a few hundred frames around Firefox's wait, no WebGPU errors.
 
+Played on N64Recomp-browser v0.50.0 (main 6fcc1df built with its pin moved there, served locally) on 2026-10-16, RTX
+2070, a fresh profile each, one page at a time, a quiet host, by `tools/play_plan.json` with `play_page.mjs`: at
+1256x645 headless Chrome 155 never waited and drew 54.6 presents a second (median; headless Chrome drew about 56 frames
+a second that night: four games played from Pages beside their builds, as a control, read 54.8-55.6 too), paced to the
+game's 30 for a few seconds after the boot, Firefox 158 waited 2.5 s and drew 60.4; uncapped at 3840x2000 (`--uncapped
+--play 25`, the first such run) Chrome drew 250 and Firefox 160.8 after a 2.8 s wait. A few hundred frames of sound
+short in Firefox, none in Chrome, no WebGPU errors.
+
 With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
 each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
 for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
