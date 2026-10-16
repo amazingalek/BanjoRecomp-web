@@ -136,86 +136,19 @@ new game from the file select, then Spiral Mountain and Mumbo's Mountain, with B
 more). A new game's opening can be skipped with Start only once a save file exists, so `tools/warp.js` takes the game
 to a map by the same request its own code leaves for a map change.
 
-On a laptop's Intel UHD (Tiger Lake, 2026-10-13, built from the web forks before the page moved to Banjo's own
-submodules) the page played smoothly in Chrome and almost so in Firefox: Firefox's frames came every 31 ms at the
-median, but 92 in two minutes took over 50 ms (Chrome's 3), its p99 62 ms against 32, with the Intel chip 79-89% busy
-against Chrome's 40-61%. The game reads no frame back and draws nothing with the ubershader there; it issues up to
-~600 draws a frame. It runs at 20-30 frames a second, interpolated to the display's rate. On an RTX 2070 with a heavy
-pass added to every present to make it fall behind, 4-25 game frames in every 5 s were never shown and the rest one
-to three times, in both browsers, until rt64-web e8e162e paced them evenly; then every frame was shown once.
+The game reads no frame back, and with its list it draws nothing with the ubershader; it issues up to ~600 draws a
+frame. It runs at 20-30 frames a second, interpolated to the display's rate. When the GPU falls behind, rt64-web
+e8e162e paces its presents evenly: on an RTX 2070 with a heavy pass added to every present to make it fall behind,
+4-25 game frames in every 5 s were never shown and the rest one to three times, in both browsers, and with it every
+frame is shown once.
 
-Played from the published page (main 8374e3c, N64Recomp-browser 7b80155) on 2026-10-14 (RTX 2070, an idle host), by
-`tools/play_plan.json` with N64Recomp-browser's `tools/play_page.mjs` (`node play_page.mjs chrome|firefox
-https://amazingalek.github.io/BanjoRecomp-web/index.html <rom> tools/play_plan.json`, its header says more): the
-launcher, Load ROM and the intro, with sound and no WebGPU errors. On a first visit a local build of the same commit
-in headless Chrome 155 waited 1.4 s for 12 shaders at the start and then drew 55-56 frames a second. Firefox 158
-waited 5.4 s for all 111 (8.4 s on v0.28.0) and then drew 60-61. On a 3840x2000 canvas, the stand-in for integrated
-graphics, Chrome drew 22-56 and Firefox 14-61, unevenly, with rt64 pacing its presents to the game's 30 frames a
-second for 10 s after the wait.
+The sections shorten the waits. Against the same list as one (a build of main 8e7ba0c with it in sections against the
+page published from 8e7ba0c, two cold runs each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select
+and a new game), Firefox 158 waited 2.8-2.9 s for the boot's 39 pipelines where it had waited 5.3 s for all 111, then
+1.8-1.9 s for title's 43 when the title came up; Chrome 155 headless waited 1.4-1.6 s for 6 at the start where it had
+waited 1.4-1.5 s for 12, and built the rest by ~6 s after Start Game against ~3 s; both drew 59-60 presents a second
+(median), with no WebGPU errors.
 
-Played again from the page built on N64Recomp-browser b1c35d1 (main 8e7ba0c) on 2026-10-14, on that canvas, an idle host,
-one page at a time: Firefox 158 waited 5.3 s for the 111 and then drew 58-60, after 10 s that rt64's pacing held at
-20-30, no sound short; Chrome 155 waited 1.4 s for 12 and drew 37-56.
-
-Played again from the page built on N64Recomp-browser ed8764a (v0.36.0, main e4cc529) on 2026-10-14, on that canvas,
-an idle host, one page at a time, 90 s: Firefox 158 waited 5.2 s for the 111 and then drew 59-60 throughout, rt64's
-pacing never on, 162 sound frames short in the wait; Chrome 155 waited 1.5 s for 12, then rt64's pacing held it at the
-game's 30 for 10 s (its first try of the display's rate held), then 55-56, 1,086 frames short around the wait.
-
-Played again from the page built on N64Recomp-browser 2efc795 (rt64-web 9ed449d, main 24b9a0d) on 2026-10-14, on that
-canvas, a quiet host, one page at a time, 25 s after the waits: Chrome 155 waited 1.4-1.7 s for the boot's 6 (two
-runs) and drew 59-60 straight after, rt64's pacing never on (it counts drops again only a second after a wait now);
-Firefox 158 waited 5.2 s for the boot's 39 and drew 59-60; no sound short after the waits, no WebGPU errors.
-
-On a laptop's Intel UHD (Tiger Lake, Windows 11 in its best power efficiency mode) on 2026-10-14, from the published
-page (main 24b9a0d, N64Recomp-browser 2efc795), by `tools/play_plan.json` (`--play 90`) and `tools/shader_plan.json`
-(`--section game`) with `play_page.mjs` at 1256x645, Firefox 158 and headless Chrome 155, a fresh profile each, one
-page at a time; presents a second are medians after the waits, and the RTX beside the Intel chip drew nothing. Firefox
-waited 3.9 s for the boot's 39 and then drew 20 a second (19.6-30.3), rt64's pacing holding it at the game's 20 from
-63 s on, with the Intel chip 80% idle and Firefox's GPU process at 0.11 cores; in the game section it waited 3.6 s for
-39 and 1.4 s for 43 and drew 29.6 (19.4-35.5), Spiral Mountain drawn right. Chrome waited 2.0-2.5 s for 4 and drew
-48.5 and 40.9, the pacing switching 5 and 13 times, the Intel chip 40% busy, and in the game section 51-111 sound
-frames short three times mid-play. No WebGPU errors. Not smooth in either browser, and Firefox at about half Chrome's
-rate with its GPU mostly idle.
-
-Played again from the page built on N64Recomp-browser d3b9031 (N64ModernRuntime-web f0e0884, RecompFrontend-web 75fe596,
-rt64-web f34b19c; main b5dd1dc, gh-pages 91df497) on 2026-10-15, its files served locally with the cross-origin headers,
-RTX 2070, 1256x645, a fresh profile each, the host's every core busy with other work, by `tools/play_plan.json` (the
-intro, 25 s) with `play_page.mjs`: headless Chrome 155 waited 1.6 s for 6 and then drew 59.6 presents a second (median),
-Firefox 158 waited 3.2 s for 39 and then drew 59.4, with no WebGPU errors or exceptions in either. With
-`?present-stats&presents-in-flight=3` (rt64-web f34b19c) Firefox printed `plume: at most 3 presents in flight` and a
-line every 5 s: 59.5 presents a second, each done on the GPU 1-16 ms after it was presented (the median of each line).
-
-Played again from Pages, built on N64Recomp-browser 7277a2e (rt64-web 8bea892, tile copies reused from one display list
-to the next; main 086919d, gh-pages ffa73a0) on 2026-10-15, RTX 2070, 1256x645, a fresh profile each, the host's every
-core busy with other work, by `tools/play_plan.json` (the intro, 25 s) with `play_page.mjs`: headless Chrome 155 waited
-3.2 s for 6 and then drew 59.0 presents a second (median), Firefox 158 waited 5.4 s for 39 and then drew 59.1. Sound
-short only just after Chrome's wait, no WebGPU errors in either. Firefox's one exception is the first load's wasm fetch,
-cut off by `coi_serviceworker.js`'s reload.
-
-Played again from Pages on N64Recomp-browser v0.42.0 and v0.43.0 (mains 3d676e2 and 69d2981, the same code; Pages moved
-from one to the other while these ran) on 2026-10-15, RTX 2070, a fresh profile each, one page at a time, by
-`tools/play_plan.json` with `play_page.mjs`: at 1256x645 headless Chrome 155 waited 1.4 s for 6 and drew 59.6 presents
-a second (median), Firefox 158 waited 2.8 s for the boot's 39 and drew 59.6; at 3840x2000 (`--play 25`) Chrome waited
-1.5 s and drew 59.6, Firefox 2.9 s and 59.5. A few hundred frames of sound short around Chrome's wait, none in Firefox,
-no WebGPU errors.
-
-Played on N64Recomp-browser v0.46.0 (main 44e87c9 built with its pin moved there, served locally) on 2026-10-15, RTX
-2070, a fresh profile each, one page at a time, a host 14-27% busy, by `tools/play_plan.json` with `play_page.mjs`: at
-1256x645 headless Chrome 155 waited 1.4 s for 6 and drew 59.6 presents a second (median), Firefox 158 waited 2.8 s for
-the boot's 39 and drew 59.6; at 3840x2000 (`--play 25`) Chrome waited 1.4 s and drew 59.6, Firefox 2.7 s and 59.6. No
-sound short in Chrome, a few hundred frames around Firefox's wait, no WebGPU errors.
-
-Played on N64Recomp-browser v0.50.0 (main 6fcc1df built with its pin moved there, served locally) on 2026-10-16, RTX
-2070, a fresh profile each, one page at a time, a quiet host, by `tools/play_plan.json` with `play_page.mjs`: at
-1256x645 headless Chrome 155 never waited and drew 54.6 presents a second (median; headless Chrome drew about 56 frames
-a second that night: four games played from Pages beside their builds, as a control, read 54.8-55.6 too), paced to the
-game's 30 for a few seconds after the boot, Firefox 158 waited 2.5 s and drew 60.4; uncapped at 3840x2000 (`--uncapped
---play 25`, the first such run) Chrome drew 250 and Firefox 160.8 after a 2.8 s wait. A few hundred frames of sound
-short in Firefox, none in Chrome, no WebGPU errors.
-
-With the list in sections (a build of main 8e7ba0c with it, against the page published from 8e7ba0c, two cold runs
-each, interleaved; RTX 2070, 1256x645, the intro skipped, the file select and a new game): Firefox 158 waited 2.8-2.9 s
-for the boot's 39 pipelines where it had waited 5.3 s for all 111, then 1.8-1.9 s for title's 43 when the title came
-up; Chrome 155 headless waited 1.4-1.6 s for 6 at the start where it had waited 1.4-1.5 s for 12, and built the rest
-by ~6 s after Start Game against ~3 s; 59-60 presents a second (median) and no WebGPU errors in either browser.
+How the page plays, in each browser and on which GPU, is recorded in N64Recomp-browser's
+[plays.jsonl](https://github.com/amazingalek/N64Recomp-browser/blob/main/plays.jsonl) and its
+[games table](https://github.com/amazingalek/N64Recomp-browser#games).
