@@ -118,7 +118,7 @@ set headers, as is, and `coi_serviceworker.js` sets them after one reload. The p
 it, the settings and the saves are kept in the browser's IndexedDB for that origin.
 
 The page builds the game's shaders from `src/rt64_shaders.txt`, whose 186 are 111 pipelines. In Chrome they are
-built behind the game from its first frame, and the game waits only when a frame wants 4 or more that aren't built yet,
+built in the background, and the game waits only when a frame wants 4 or more that aren't built yet,
 under a small "Preparing graphics" indicator in a corner (shown only after a second); Chrome keeps them for the visits
 after. Firefox builds a pipeline in line with the rest of its GPU work, so there the game waits instead: on its first
 frame for the list's boot, and for a section when a frame first wants 4 of its shaders. Without them RT64 would draw with its ubershader
