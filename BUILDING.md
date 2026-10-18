@@ -117,17 +117,20 @@ browser with WebGPU (Chrome or Edge 113 and up) and must be cross-origin isolate
 set headers, as is, and `coi_serviceworker.js` sets them after one reload. The player picks their ROM in the launcher;
 it, the settings and the saves are kept in the browser's IndexedDB for that origin.
 
-The page builds the game's shaders from `src/rt64_shaders.txt`, whose 186 are 111 pipelines. In Chrome they are
+The page builds the game's shaders from `src/rt64_shaders.txt`, 224 of them (its first four sections' 186 are 111
+pipelines). In Chrome they are
 built in the background, and the game waits only when a frame wants 4 or more that aren't built yet,
 under a small "Preparing graphics" indicator in a corner (shown only after a second); Chrome keeps them for the visits
 after. Firefox builds a pipeline in line with the rest of its GPU work, so there the game waits instead: on its first
 frame for the list's boot, and for a section when a frame first wants 4 of its shaders. Without them RT64 would draw with its ubershader
 meanwhile, which integrated graphics can't keep up with. The build specializes each one (`RT64_PREBUILT_SHADER_LIST`
 in `CMakeLists.txt`) and runs it through `spirv-opt` when that is on `PATH`; the list's header says how it was recorded
-and what was played. The list is in four sections, recorded by `tools/shader_plan.json` with N64Recomp-browser's
+and what was played. The list is in nine sections, the first four recorded by `tools/shader_plan.json` with N64Recomp-browser's
 `tools/record_shaders.mjs`: the boot (the Rareware logo and the band's intro, 39 pipelines), title (the title, its
 flyovers and the file select), game (a new game's opening and Spiral Mountain) and rest (what an earlier recording by
-hand met beyond those). A shader it missed is built
+hand met beyond those); the last five, ttc, fp, mmm, grunty and ending, hold what a long play of later places
+(worlds, rooms, Gruntilda's fight, the ending) drew beyond those, and the plan's sections of the same names reach those
+places by `tools/warp.js`. A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
 

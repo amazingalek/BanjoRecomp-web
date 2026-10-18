@@ -12,9 +12,14 @@
 # its flyovers for 2.5 minutes, and the file select screen; game is a new game's opening cutscene and Spiral Mountain
 # outside Banjo's house. rest is what an earlier recording, played by hand, met beyond those: about ten minutes of the
 # attract mode's demos, Spiral Mountain (Banjo's house inside, Bottles, the moat), the pause menu, the totals screen,
-# Save and Quit with its game over sequence. Not yet: Gruntilda's Lair, playing in a world, Mumbo's transformations,
-# flying, bosses, the quiz, the ending. Flags follow settings (filtering, HDR, MSAA, upscaling), so a change to one of
-# those defaults means recording again.
+# Save and Quit with its game over sequence. The last five sections are places the plan reaches by code, by
+# tools/warp.js from Spiral Mountain, and played about 25 s each (the plan's header says how): ttc, Treasure Trove Cove
+# and its sandcastle, Clanker's Cavern and inside Clanker, Bubblegloop Swamp; fp, Freezeezy Peak and its Christmas
+# tree, Gobi's Valley, Rubee's chamber and the water pyramid; mmm, Mad Monster Mansion and its church, Rusty Bucket
+# Bay; grunty, Furnace Fun and the battlements with Gruntilda's fight; ending, the ending's cutscene maps. Each holds
+# what a long play of those places drew that the sections above lack. Not yet: Gruntilda's Lair between the worlds,
+# the worlds' other rooms, Mumbo's transformations, flying, the other bosses. Flags follow settings (filtering, HDR,
+# MSAA, upscaling), so a change to one of those defaults means recording again.
 0f0a4000 00982c3f fc62fe04 3f15f9ff 0800000e
 0c184240 00982c3f fc129804 3f15ffff 0ccb540e
 0c192078 0098ac3f fc129804 3f15ffff 0ccb540e
@@ -261,3 +266,46 @@ section rest
 0f0a4030 0099ac3f fc129804 3f15ffff 1ccb540a
 0f0a4030 0099ac3f fc62fe04 3f15f9ff 1889540a
 0f0a4030 0099ac3f fc62fe04 3f15f9ff 1cc9540a
+section ttc
+0f0a4030 0098ac3f fc129804 3f15ffff 099b100a
+0f0a4030 0098ac3f fc129804 3f15ffff 099b100e
+0c184271 0098ac3f fc129804 3f15ffff 088a000e
+0c192078 0098ac3f fc129804 3f15ffff 099b100e
+0f0a4030 0098ac3f fc129804 3f15ffff 088a000a
+0c184270 0098ac3f fcff99ff ff14fe3f 088a000e
+00504a71 00882c3f fc119623 ff2fffff 0ccb540a
+0c1841f8 0098ac3f fc129804 3f15ffff 0ccb540a
+0c1841f8 0098ac3f fc129804 3f15ffff 088a000a
+0c184250 0098ac3f fc129804 3f15ffff 088a000a
+0c192058 0099ac3f fc129804 3f15ffff 188a000e
+0c1841f8 00992c3f fc129804 3f15ffff 188a000e
+0c1841f8 00992c3f fc129804 3f15ffff 188a000a
+0c1841f8 00992c3f fc62fe04 3f15f9ff 1999540e
+section fp
+0f0a4000 0098ac3f fc62fe04 3f15f9ff 0800000e
+0c184240 0098ac3f fc62fe04 3f15f9ff 0800000e
+0c184271 0099ac3f fc129804 3f15ffff 188a000a
+0f0a4030 0098ac3f fcff99ff ff14fe3f 088a000e
+0c184270 00982c3f fc62fe04 3f15f9ff 0800000a
+0c192078 0098ac3f fcff99ff ff14fe3f 088a000a
+0c1841f8 00992c3f fcff99ff ff14fe3f 1ccb540a
+0c184270 0098ac3f fc129804 3f15ffff 0ccb540a
+section mmm
+0c1841f9 00992c3f fc129804 3f15ffff 1ccb540a
+0c1841f8 00992c3f fc129804 3f15ffff 1ccb540a
+0c1841f8 00992c3f fc269804 1f14ffff 188e000a
+00504a71 00092c3f fc119623 ff2fffff 1ccb540a
+0c184250 0099ac3f fc129804 3f15ffff 1ccb540e
+section grunty
+0c192078 0099ac3f fc129804 3f15ffff 1bba440e
+0c192078 00992c3f fc269804 1f14ffff 1ccf540e
+0c192078 0099ac3f fc62fe04 3f15f9ff 1cc9540a
+0c1841f8 0099ac3f fc62fe04 3f15f9ff 1cc9540a
+0f0a4030 0099ac3f fc62fe04 3f15f9ff 1999540e
+00504240 00092c3f fcffffff fffcf279 1ccb540a
+section ending
+0c192078 0099ac3f fcff99ff ff14fe3f 1ccb540a
+0c192078 0099ac3f fcff99ff ff14fe3f 1ccb540e
+0c1841f8 00992c3f fc62fe04 3f15f9ff 1cc9540a
+0c1841f8 00992c3f fcff99ff ff14fe3f 188a000e
+0c1841f8 00992c3f fcff99ff ff14fe3f 188a000a
