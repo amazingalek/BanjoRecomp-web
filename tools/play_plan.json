@@ -3,13 +3,17 @@
              "the intro, Start to the file select and A on Game 1, which on a new profile starts a new game. Its opening is skipped",
              "to Spiral Mountain as Start skips it once a save exists, and then Mumbo's Mountain, both by tools/warp.js; in each",
              "Banjo walks to and fro, a little further out than back (the house's door is behind him in Spiral Mountain), jumps,",
-             "attacks and turns the camera, about 25 s in Spiral Mountain and 50 s in Mumbo's Mountain."],
+             "attacks and turns the camera, about 25 s in Spiral Mountain and 50 s in Mumbo's Mountain.",
+             "Its waits and holds there are on the game's own clock, the seconds it adds each frame's length to (the struct at",
+             "0x8037E8E0's +8, read in 60ths), so every browser walks Banjo as far whatever frames it gives the game; the last step",
+             "reads where Banjo is (player_position)."],
   "page": "BanjoRecompiled.html",
   "load": [["until","Device Name",30000],["wait",9000]],
   "setup": [["rom",885,323],["wait",4000]],
   "start": [["click",885,323],["until","Initializing recomp heap",30000],["wait",10000],["hold","Enter","Enter",13,300],["wait",4000],["hold","Enter","Enter",13,300],["wait",4000],["hold","Enter","Enter",13,300],["wait",4000],["hold","Enter","Enter",13,300],["wait",4000],["hold","Enter","Enter",13,300],["wait",4000],["hold","Space"," ",32,300],["wait",6000],["evalFile","warp.js"]],
   "play": [
     ["eval","warp(1, 0x12)"],
+    ["clock","Math.round(new Float32Array(new Uint32Array([n64r(0x8037E8E8)]).buffer)[0] * 60)",60],
     ["wait",4000],
     ["hold","KeyS","s",83,1500],
     ["hold","KeyD","d",68,600],
@@ -38,7 +42,7 @@
     ["hold","ArrowRight","ArrowRight",39,1000],
     ["wait",500],
     ["eval","warp(2, 2)"],
-    ["wait",4000],
+    ["wait",8000],
     ["hold","KeyS","s",83,1500],
     ["hold","KeyD","d",68,600],
     ["hold","KeyS","s",83,1200],
@@ -90,6 +94,7 @@
     ["wait",800],
     ["hold","ArrowLeft","ArrowLeft",37,1000],
     ["hold","ArrowRight","ArrowRight",39,1000],
-    ["wait",500]
+    ["wait",500],
+    ["eval","(() => { const f = (a) => new Float32Array(new Uint32Array([n64r(a)]).buffer)[0]; return [0, 4, 8].map((i) => Math.round(f(0x8037C5A0 + i))); })()"]
   ]
 }
