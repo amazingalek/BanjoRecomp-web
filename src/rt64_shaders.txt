@@ -17,9 +17,10 @@
 # and its sandcastle, Clanker's Cavern and inside Clanker, Bubblegloop Swamp; fp, Freezeezy Peak and its Christmas
 # tree, Gobi's Valley, Rubee's chamber and the water pyramid; mmm, Mad Monster Mansion and its church, Rusty Bucket
 # Bay; grunty, Furnace Fun and the battlements with Gruntilda's fight; ending, the ending's cutscene maps. Each holds
-# what a long play of those places drew that the sections above lack. Not yet: Gruntilda's Lair between the worlds,
-# the worlds' other rooms, Mumbo's transformations, flying, the other bosses. Flags follow settings (filtering, HDR,
-# MSAA, upscaling), so a change to one of those defaults means recording again.
+# what a long play of those places drew that the sections above lack; ttc's last one and fp's last four are what
+# tools/play_plan_extended.json's Treasure Trove Cove and Freezeezy Peak drew beyond the list. Not yet: Gruntilda's Lair
+# between the worlds, the worlds' other rooms, Mumbo's transformations, flying, the other bosses. Flags follow
+# settings (filtering, HDR, MSAA, upscaling), so a change to one of those defaults means recording again.
 0f0a4000 00982c3f fc62fe04 3f15f9ff 0800000e
 0c184240 00982c3f fc129804 3f15ffff 0ccb540e
 0c192078 0098ac3f fc129804 3f15ffff 0ccb540e
@@ -281,6 +282,7 @@ section ttc
 0c1841f8 00992c3f fc129804 3f15ffff 188a000e
 0c1841f8 00992c3f fc129804 3f15ffff 188a000a
 0c1841f8 00992c3f fc62fe04 3f15f9ff 1999540e
+00504a50 00092cff fc309661 552eff7f 1ccb540a
 section fp
 0f0a4000 0098ac3f fc62fe04 3f15f9ff 0800000e
 0c184240 0098ac3f fc62fe04 3f15f9ff 0800000e
@@ -290,6 +292,10 @@ section fp
 0c192078 0098ac3f fcff99ff ff14fe3f 088a000a
 0c1841f8 00992c3f fcff99ff ff14fe3f 1ccb540a
 0c184270 0098ac3f fc129804 3f15ffff 0ccb540a
+0f0a4030 00982c3f fc129804 3f15ffff 0ccb540e
+0f0a4030 0098ac3f fc129804 3f15ffff 0803540e
+0c192078 00992c3f fc129804 3f15ffff 1ccb540e
+0c1841d8 00992c3f fcff99ff ff14fe3f 1ccb540a
 section mmm
 0c1841f9 00992c3f fc129804 3f15ffff 1ccb540a
 0c1841f8 00992c3f fc129804 3f15ffff 1ccb540a

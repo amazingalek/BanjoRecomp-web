@@ -134,9 +134,10 @@ places by `tools/warp.js`. A shader it missed is built
 behind the game, which draws with the ubershader until it is ready, and the page remembers it and builds it with the
 rest on the next visit.
 
-`tools/play_plan.json` plays the page as a player would, for N64Recomp-browser's `tools/play_page.mjs`: the intro, a
-new game from the file select, then Spiral Mountain and Mumbo's Mountain, with Banjo on foot in each (its header says
-more). A new game's opening can be skipped with Start only once a save file exists, so `tools/warp.js` takes the game
+`tools/play_plan.json` plays the page as a player would, for N64Recomp-browser's `tools/play_page.mjs`, in 2-3
+minutes: the intro, a new game from the file select, then Spiral Mountain and Mumbo's Mountain, with Banjo on foot in
+each; `tools/play_plan_extended.json`, for when a longer play is needed, goes on to Treasure Trove Cove, Freezeezy Peak
+and Mad Monster Mansion, in at most 5 minutes (their headers say more). A new game's opening can be skipped with Start only once a save file exists, so `tools/warp.js` takes the game
 to a map by the same request its own code leaves for a map change.
 
 The game reads no frame back, and with its list it draws nothing with the ubershader; it issues up to ~600 draws a
