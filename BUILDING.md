@@ -77,7 +77,7 @@ Voilà! You should now have a `BanjoRecompiled` executable in the build director
 
 This fork's `main` branch also builds with [Emscripten](https://emscripten.org) into a page, `BanjoRecompiled.html`,
 that draws through WebGPU. `lib/rt64`, `lib/N64ModernRuntime` and `lib/RecompFrontend` are Banjo: Recompiled's own,
-at the same upstream commits, and [N64Recomp-browser](https://github.com/amazingalek/N64Recomp-browser) (`lib/N64Recomp-browser`)
+at the same upstream commits, and [N64Recomp-browser](https://github.com/n64hub/N64Recomp-browser) (`lib/N64Recomp-browser`)
 patches their checkouts with the web support and makes the game a page. The patches change nothing in the desktop
 build. Mods a player adds are off on the page (the live recompiler writes machine code, which a page can't
 load), and so is RT64's render to RAM (`src/main/main.cpp` says why).
@@ -154,5 +154,5 @@ waited 1.4-1.5 s for 12, and built the rest by ~6 s after Start Game against ~3 
 (median), with no WebGPU errors.
 
 How the page plays, in each browser and on which GPU, is recorded in N64Recomp-browser's
-[plays.jsonl](https://github.com/amazingalek/N64Recomp-browser/blob/main/plays.jsonl) and its
-[games table](https://github.com/amazingalek/N64Recomp-browser#games).
+[plays.jsonl](https://github.com/n64hub/N64Recomp-browser/blob/main/plays.jsonl) and its
+[games table](https://github.com/n64hub/N64Recomp-browser#games).
